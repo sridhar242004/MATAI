@@ -1,0 +1,11 @@
+{
+  "name": "math-conjecture-vercel",
+  "version": "2.0.0",
+  "description": "Vercel Neural Conjecture Proposer",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "engines": { "node": ">=18.0.0" }
+}
