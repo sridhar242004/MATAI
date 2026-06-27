@@ -1,8 +1,6 @@
 <div align="center">
 
-# ∑ Mathematical Conjecture Proposer
-
-**A parametric LLM orchestration layer for generating, parsing, and archiving mathematically rigorous conjectures — shipped as a single zero-build HTML file.**
+<img src="assets/banner.svg" alt="Mathematical Conjecture Proposer — animated banner" width="100%"/>
 
 [![JavaScript](https://img.shields.io/badge/Vanilla_JS-ES2020+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
 [![Inference](https://img.shields.io/badge/Inference-Groq_LPU-FF6B35?style=flat-square)](#)
@@ -17,7 +15,7 @@
 
 ---
 
-> This README is not marketing copy. It was written after a full line-by-line pass of `index.html` (3,552 lines) — every metric, function name, and line range below was extracted directly from the source, not estimated. Where the implementation has real trade-offs, they're documented in [Engineering Review](#-engineering-review--honest-trade-offs) rather than glossed over.
+> This README was written after a full line-by-line pass of `index.html` (3,552 lines). Every metric, function name, and line range below was extracted directly from the source with `grep`/`awk`, not estimated. Where the implementation has real costs, they're documented in [Engineering Review](#-engineering-review--honest-trade-offs) rather than glossed over.
 
 ## What This Actually Is
 
@@ -25,11 +23,11 @@ A single HTML file that turns an LLM into a **constrained conjecture-generation 
 
 There is no framework runtime, no bundler, no `node_modules`. Every third-party capability (Bootstrap, MathJax, Chart.js, GSAP) is a CDN tag, and the entire client — UI state, history, settings, six tab controllers, two chart-driven analytics views, and the canvas particle field — lives in one inline `<script>` block.
 
+> **A note on the animated visuals in this README:** the banner above and the diagram further down are hand-built SVGs, not screen-recorded GIFs — `assets/banner.svg` (≈5.7 KB) and `assets/flow.svg` (≈6.0 KB) combined are lighter than a single typical demo GIF frame. Every color in them (`#c9a227` gold, `#00d4f5` cyan, `#7c3aed` purple, `#04040a` void) is lifted directly from the app's own `:root` design tokens, and the orbiting-symbol motif mirrors the app's actual `.hero-orbital` component — so the README's visual identity is generated *from* the codebase's own design system, not a generic template bolted on top.
+
 ---
 
 ## 📊 Codebase At a Glance
-
-These numbers were extracted with `grep`/`awk` against the actual file, not approximated:
 
 | Metric | Value |
 |---|---|
@@ -87,7 +85,7 @@ flowchart TB
 
 ## 🗺 Codebase Anatomy (line-accurate)
 
-Every section below is a real comment banner in the source, with its real starting line. This is the actual table of contents of the file — useful for code review, onboarding, or just finding where to make a change.
+Every section below is a real comment banner in the source, with its real starting line — the actual table of contents of the file, useful for code review or onboarding.
 
 <details>
 <summary><strong>CSS — 21 sections, lines 34–2106</strong></summary>
@@ -155,6 +153,12 @@ Every section below is a real comment banner in the source, with its real starti
 
 ## 🔁 Generation Request Lifecycle
 
+<div align="center">
+<img src="assets/flow.svg" alt="Animated request lifecycle diagram" width="100%"/>
+</div>
+
+The animation above is intentionally honest about what it is: a looping, stylized illustration of the pipeline, not a literal single-request timeline. For the precise, literal version — exact call order, payload shapes, what happens on failure — here's the same path as a sequence diagram:
+
 ```mermaid
 sequenceDiagram
     actor User
@@ -183,7 +187,7 @@ sequenceDiagram
     DOM->>User: Render conjecture card + toast "Generated & saved!"
 ```
 
-The same `parseResp` → `san()` → MathJax pipeline is reused, unmodified, by `runBatch()` for up to 5 concurrent conjecture cards — the single-generation and batch-generation code paths share 100% of their rendering/parsing logic and diverge only in the backend endpoint called (`/api/generate` vs `/api/batch`).
+The same `parseResp` → `san()` → MathJax pipeline is reused, unmodified, by `runBatch()` for up to 5 concurrent conjecture cards — single-generation and batch-generation share 100% of their rendering/parsing logic and diverge only in which endpoint is called (`/api/generate` vs `/api/batch`).
 
 ---
 
@@ -315,6 +319,7 @@ Then: **Settings → Test Backend** to confirm `keyConfigured: true`, pick a mod
 | State / Persistence | Vanilla JS, `localStorage` |
 | Inference | Groq LPU (LLaMA 3.x/4, GPT-OSS, Qwen3) |
 | Backend | Bring your own — 3-endpoint contract above |
+| README visuals | Hand-authored animated SVG (`assets/banner.svg`, `assets/flow.svg`) — CSS keyframes + `offset-path`, no GIFs |
 
 ---
 
