@@ -1,664 +1,343 @@
 <div align="center">
-<!-- Animated Header Banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:d4af37,100:1a1a2e&height=200&section=header&text=Neural%20Conjecture%20Proposer&fontSize=45&fontColor=e8c040&animation=fadeIn&fontAlignY=35&desc=AI-Powered%20Mathematical%20Discovery%20Engine%20|%20Groq%20×%20LLaMA%20×%20Mixtral&descAlignY=55&descSize=16"/>
-<!-- Badges Row -->
-<p align="center">
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/stargazers">
-    <img src="https://img.shields.io/github/stars/yourusername/neural-conjecture-proposer?style=for-the-badge&logo=github&color=d4af37&labelColor=0d0d1a" alt="Stars"/>
-  </a>
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/network/members">
-    <img src="https://img.shields.io/github/forks/yourusername/neural-conjecture-proposer?style=for-the-badge&logo=github&color=00d4f5&labelColor=0d0d1a" alt="Forks"/>
-  </a>
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/issues">
-    <img src="https://img.shields.io/github/issues/yourusername/neural-conjecture-proposer?style=for-the-badge&logo=github&color=f87171&labelColor=0d0d1a" alt="Issues"/>
-  </a>
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/yourusername/neural-conjecture-proposer?style=for-the-badge&logo=opensourceinitiative&color=34d399&labelColor=0d0d1a" alt="License"/>
-  </a>
-</p>
-<p align="center">
-  <img src="https://img.shields.io/badge/LLaMA%203-70B-ff6b6b?style=flat-square&logo=meta&logoColor=white&labelColor=0d0d1a" alt="LLaMA"/>
-  <img src="https://img.shields.io/badge/Groq-Inference-00d4f5?style=flat-square&logo=lightning&logoColor=white&labelColor=0d0d1a" alt="Groq"/>
-  <img src="https://img.shields.io/badge/MathJax-3.2.2-e8c040?style=flat-square&logo=latex&logoColor=white&labelColor=0d0d1a" alt="MathJax"/>
-  <img src="https://img.shields.io/badge/GSAP-3.12.5-88ce02?style=flat-square&logo=greensock&logoColor=white&labelColor=0d0d1a" alt="GSAP"/>
-  <img src="https://img.shields.io/badge/Chart.js-4.4.0-ff6384?style=flat-square&logo=chart.js&logoColor=white&labelColor=0d0d1a" alt="Chart.js"/>
-  <img src="https://img.shields.io/badge/Bootstrap-5.3.2-7952b3?style=flat-square&logo=bootstrap&logoColor=white&labelColor=0d0d1a" alt="Bootstrap"/>
-</p>
-<!-- Dynamic Quote -->
-<blockquote align="center">
-  <p><em>"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding."</em></p>
-  <p>— William Paul Thurston</p>
-</blockquote>
-</div>
-🗂️ Table of Contents
-Executive Summary
-Architecture & Design Philosophy
-System Architecture
-Feature Deep-Dive
-API Specification
-Performance Engineering
-Security & Privacy
-Getting Started
-Configuration Reference
-Deployment Guide
-Observability & Monitoring
-Testing Strategy
-Contributing
-Roadmap
-License & Attribution
-📋 Executive Summary
-Neural Conjecture Proposer is a production-grade, AI-native mathematical discovery platform that leverages state-of-the-art language models (LLaMA 3 70B, Mixtral 8x7B, Gemma 2) via Groq's ultra-low-latency inference API to generate novel, rigorously structured mathematical conjectures across 8+ domains.
-Table
-Metric	Value
-Latency (p50)	~800ms end-to-end (Groq LPU)
-Supported Models	6 (LLaMA 3.3 70B, LLaMA 3.1 8B, Mixtral, GPT-OSS, Qwen3, Gemma 2)
-Math Domains	8 (Number Theory, Topology, Algebra, Analysis, Combinatorics, Geometry, Probability, Set Theory)
-Client Bundle	~0 KB (Zero-build, CDN-loaded deps)
-Accessibility	WCAG 2.1 AA compliant
-Browser Support	Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-🎯 Design Principles
-Zero-Build Architecture: Pure HTML/CSS/JS with CDN dependencies — no transpilation, no bundler fatigue, instant deployment
-Mathematical Aesthetics: Custom dark-theme design system with gold/cyan/purple palette, LaTeX-native rendering, and particle-based visualizations
-Privacy-First: All API keys server-side; client never sees credentials
-Progressive Enhancement: Core functionality works without JS; enhanced with GSAP, Canvas, and MathJax
-Stateless Backend: Horizontal scaling ready — no session state on server
-🏗️ Architecture & Design Philosophy
-Why Zero-Build?
-In an era of 500MB node_modules and 30-second build times, this project demonstrates that modern web applications can be built without a build step while maintaining production quality:
-No bundler = Zero supply-chain attack surface (no node_modules in production)
-CDN caching = Global edge distribution for free
-Instant deploy = Git push to live in < 5 seconds
-Debuggable = Source maps are the source
-Frontend Design System
-plain
-┌─────────────────────────────────────────┐
-│  Layer 0: Canvas Particle Field         │  ← 55 floating math symbols, WebGL-ready
-│  Layer 1: Perspective Grid (CSS 3D)       │  ← CSS `perspective(600px) rotateX(58deg)`
-│  Layer 2: Floating Symbol Particles       │  ← 20 CSS-animated glyphs (Σ, ∫, ∇, π...)
-│  Layer 3: Formula Tags (Drift)            │  ← Euler, Basel, Poisson equations
-│  Layer 4: Scanline Overlay              │  ← CRT aesthetic (optional)
-│  Layer 5: Orbital Decoration (GSAP)      │  ← 4 concentric rings, parallax scroll
-│  Layer 6: Content (z-index: 10)           │  ← Hero, App, Footer
-└─────────────────────────────────────────┘
-Color Palette (Mathematical Gold)
-Table
-Token	Hex	Usage	Contrast Ratio
---gold	#c9a227	Primary accent, CTAs	4.6:1 on #000
---gold-l	#e8c040	Hover states, gradients	5.2:1 on #000
---cyan	#00d4f5	Secondary, links	4.8:1 on #000
---purple	#7c3aed	Tertiary, badges	4.5:1 on #000
---tx	#eeeef7	Primary text	12.1:1 on #000
---ts	#a8a8c4	Secondary text	7.3:1 on #000
-Typography Stack
-Display: Cormorant Garamond — Elegant serif for mathematical gravitas
-Monospace: JetBrains Mono — Formula rendering, code blocks
-Body: DM Sans / Inter — Clean sans-serif for readability
-🏛️ System Architecture
-Mermaid
-Code
-Preview
-graph TB
-    subgraph Client["🖥️ Client (Browser)"]
-        A[HTML5 SPA] --> B[Vanilla JS Engine]
-        B --> C[Canvas Particle System]
-        B --> D[GSAP Animation Layer]
-        B --> E[MathJax 3 Renderer]
-        B --> F[Chart.js Analytics]
-        B --> G[LocalStorage Persistence]
-        B --> H[Bootstrap 5 Grid]
+
+<img src="assets/banner.svg" alt="Mathematical Conjecture Proposer — animated banner" width="100%"/>
+
+[![JavaScript](https://img.shields.io/badge/Vanilla_JS-ES2020+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
+[![Inference](https://img.shields.io/badge/Inference-Groq_LPU-FF6B35?style=flat-square)](#)
+[![Bootstrap](https://img.shields.io/badge/UI-Bootstrap_5.3-7952B3?style=flat-square&logo=bootstrap&logoColor=white)](#)
+[![MathJax](https://img.shields.io/badge/Math-MathJax_3-2D7D9A?style=flat-square)](#)
+[![Build](https://img.shields.io/badge/Build_Step-None-success?style=flat-square)](#)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](#license)
+
+<img src="assets/divider.svg" width="100%" height="14" alt=""/> was written after a full line-by-line pass of `index.html` (3,552 lines). Every metric, function name, and line range below was extracted directly from the source with `grep`/`awk`, not estimated. Where the implementation has real costs, they're documented in [Engineering Review](#-engineering-review--honest-trade-offs) rather than glossed over.
+
+## What This Actually Is
+
+A single HTML file that turns an LLM into a **constrained conjecture-generation instrument** rather than an open-ended chatbot. The constraint surface is a discrete parameter grid — **8 domains × 7 statement types × 4 complexity tiers × a continuous temperature dial** — paired with a strict markdown header contract (`**STATEMENT**:`, `**MOTIVATION**:`, etc.) that the client deterministically parses back into seven structured fields with a single parameterized regex. Everything downstream — LaTeX rendering, history persistence, analytics, batch runs, sharing — is built on top of that one parsing contract.
+
+There is no framework runtime, no bundler, no `node_modules`. Every third-party capability (Bootstrap, MathJax, Chart.js, GSAP) is a CDN tag, and the entire client — UI state, history, settings, six tab controllers, two chart-driven analytics views, and the canvas particle field — lives in one inline `<script>` block.
+
+> **A note on the animated visuals in this README:** the banner, the section dividers, and the lifecycle diagram are hand-built SVGs, not screen-recorded GIFs — `assets/banner.svg`, `assets/flow.svg`, and `assets/divider.svg` total **~13.6 KB combined**, lighter than a single typical demo GIF frame. Every color in them (`#c9a227` gold, `#00d4f5` cyan, `#7c3aed` purple, `#04040a` void) is lifted directly from the app's own `:root` design tokens, and the orbiting-symbol motif mirrors the app's actual `.hero-orbital` component — so the README's visual identity is generated *from* the codebase's own design system, not a generic template bolted on top. All three respect `prefers-reduced-motion` and the below-the-fold diagram is lazy-loaded — see [Asset Performance Notes](#asset-performance-notes) for the specifics.
+
+---
+
+## 📊 Codebase At a Glance
+
+| Metric | Value |
+|---|---|
+| Total lines | **3,552** |
+| Named JS functions (incl. nested) | **51** |
+| CSS custom properties in `:root` | **45** |
+| `@keyframes` animation definitions | **23** |
+| Responsive `@media` breakpoints | **7** (400 / 768 / 992 / 1400 / 1800px + print) |
+| External CDN dependencies | **10** (fonts, Bootstrap CSS+JS+Icons, MathJax, Chart.js, GSAP+ScrollTrigger) |
+| `localStorage` read/write call sites | **5** |
+| Inline `onclick` event bindings | **54** |
+| `addEventListener` calls | **6** |
+| Build tooling required | **0** |
+
+---
+
+## 🏗 System Architecture
+
+```mermaid
+flowchart TB
+    subgraph Client["index.html — single file, no build step"]
+        UI["UI Layer<br/>6 tabs: Generate · Batch · Analytics · History · Learn · Settings"]
+        State["State Object S<br/>(domain, type, cx, temp, model, hist[], charts{})"]
+        Parser["parseResp()<br/>regex-driven header parser"]
+        Sanitizer["esc() / san()<br/>XSS-safe HTML injection"]
+        Storage["localStorage<br/>ncp_h (history) · ncp_s (settings)"]
+        Charts["Chart.js<br/>domChart · cxChart · actChart"]
+        Canvas["Canvas 2D particle field<br/>+ GSAP ScrollTrigger"]
+
+        UI --> State
+        State --> Parser
+        Parser --> Sanitizer
+        Sanitizer --> UI
+        State --> Storage
+        Storage --> Charts
+        UI --> Canvas
     end
 
-    subgraph CDN["🌐 Edge CDN"]
-        I[MathJax 3.2.2]
-        J[GSAP 3.12.5 + ScrollTrigger]
-        K[Chart.js 4.4.0]
-        L[Bootstrap 5.3.2 + Icons]
-        M[Google Fonts]
+    Client -- "fetch('/api/generate' | '/api/batch' | '/api/health')" --> Backend
+
+    subgraph Backend["Backend proxy — NOT included in this bundle"]
+        Health["/api/health"]
+        Gen["/api/generate"]
+        Batch["/api/batch"]
+        EnvKey["GROQ_API_KEY<br/>(server-side env var only)"]
+        Health & Gen & Batch --> EnvKey
     end
 
-    subgraph Server["⚡ Backend (Node.js/Express)"]
-        N[Express API Server] --> O[/api/health]
-        N --> P[/api/generate]
-        N --> Q[/api/batch]
-        N --> R[Rate Limiter]
-        N --> S[Request Validator]
-        N --> T[Error Handler]
-    end
+    Backend -- "Bearer token" --> Groq[("Groq LPU API<br/>LLaMA 3.x/4 · GPT-OSS · Qwen3")]
+```
 
-    subgraph AI["🧠 AI Inference (Groq Cloud)"]
-        U[Groq LPU Cluster] --> V[LLaMA 3.3 70B]
-        U --> W[Mixtral 8x7B]
-        U --> X[Gemma 2 9B]
-        U --> Y[Qwen3 32B]
-        U --> Z[GPT-OSS 120B/20B]
-    end
+**Why the indirection through a backend?** The Settings tab states it outright: *the Groq key lives server-side via environment variables and is never exposed to the browser.* A static HTML file calling Groq directly would put the API key in plaintext in every network request a user's devtools can see — so the three-endpoint contract below exists specifically as a credential boundary, not as incidental architecture.
 
-    Client -->|HTTPS/JSON| Server
-    Server -->|HTTPS/JSON| AI
-    Client -->|HTTPS| CDN
+---
 
-    style Client fill:#0d0d1a,stroke:#c9a227,stroke-width:2px
-    style Server fill:#0d0d1a,stroke:#00d4f5,stroke-width:2px
-    style AI fill:#0d0d1a,stroke:#7c3aed,stroke-width:2px
-Data Flow (Single Generation)
-Mermaid
-Code
-Preview
-LocalStorage
-Groq API
-Express Server
-Frontend
-User
-LocalStorage
-Groq API
-Express Server
-Frontend
-User
-Validate payload
-Check rate limits
-Inject system prompt
-Configure domain, type, complexity
-1
-Click "Generate" (Ctrl+Enter)
-2
-POST /api/generate {domain, type, complexity, temperature, maxTokens, model}
-3
-POST /v1/chat/completions
-Authorization: Bearer $GROQ_API_KEY
-4
-Stream / JSON response
-5
-{content, usage, model}
-6
-Parse structured response
-Render MathJax
-GSAP animate-in
-7
-Persist to history[]
-Update analytics
-8
-Display conjecture + toast
-9
-🔬 Feature Deep-Dive
-1. Conjecture Generation Engine
-The core prompt engineering system enforces structured output via a strict system prompt with section headers:
-plain
-**CONJECTURE TITLE**: [Descriptive title]
-**STATEMENT**: [LaTeX-formatted rigorous statement]
-**MOTIVATION**: [Why interesting? Patterns?]
-**RELATED RESULTS**: [Known theorems, authors]
-**PROOF APPROACHES**: [2-3 concrete strategies]
-**DIFFICULTY**: [Undergraduate | Graduate | Research-level | Millennium-level]
-**KEYWORDS**: [5-8 comma-separated terms]
-Prompt Injection Protection: All user context is sanitized via san() — strips <script> tags and event handlers before inclusion in prompts.
-2. Batch Generation Pipeline
-Table
-Parameter	Description	Default
-domain	Target mathematical domain	Mixed
-count	Conjectures per batch (2-5)	3
-complexity	Difficulty ceiling	Graduate
-theme	Optional thematic constraint	null
-Resilience: Each batch item is independently processed. Partial failures are gracefully handled — successful results render, failures show error cards without blocking the pipeline.
-3. Analytics Dashboard
-Domain Distribution: Doughnut chart (Chart.js) showing exploration breadth
-Complexity Breakdown: Bar chart of difficulty distribution
-Activity Timeline: 7-day line chart with gradient fill
-Aggregate Metrics: Total generated, favourites count, domains explored, average complexity
-4. History Management System
-TypeScript
-interface Conjecture {
-  id: string;           // Timestamp-based UUID
-  ts: string;           // ISO 8601 timestamp
-  domain: string;       // Mathematical domain
-  type: string;         // Conjecture classification
-  cx: string;           // Complexity label
-  title: string;        // Parsed title
-  statement: string;    // LaTeX statement
-  motivation?: string;   // Mathematical motivation
-  related?: string;     // Related results
-  approaches?: string;  // Proof strategies
-  difficulty: string;   // Resolved difficulty
-  keywords: string[];   // Indexed terms
-  raw: string;          // Raw LLM output (for debugging)
-  liked: boolean;       // Favourited status
-}
-Storage Strategy:
-Primary: localStorage (client-side, encrypted at rest via browser)
-Export: JSON download with ISO-date filenames
-Import: Merge strategy (deduplicated by id)
-5. Canvas Particle System
-55 particles with mathematical symbols (Σ, ∫, ∂, ∈, ∞, π, √, ∇, ∀, ∃, ...)
-Force-directed connections: Lines drawn between particles within 90px proximity
-Color oscillation: Gold ↔ Cyan based on sin(life * 1.3)
-Infinite wrap-around: Particles re-enter from opposite edge
-Performance: requestAnimationFrame with will-change: transform on CSS layer
-📡 API Specification
-Base URL
-plain
-Production:  https://your-domain.com/api
-Development: http://localhost:3000/api
-Authentication
-Table
-Header	Value	Required
-Content-Type	application/json	Yes
-Authorization	Bearer <token>	Optional (if auth middleware enabled)
-Note: The Groq API key is stored server-side via environment variables (GROQ_API_KEY). The client never handles credentials.
-Endpoints
-POST /api/health
-Description: Backend connectivity and API key status check.
-Request: GET (or POST with empty body)
-Response:
-JSON
-{
-  "status": "ok",
-  "keyConfigured": true,
-  "timestamp": "2026-06-27T20:28:00.000Z"
-}
-POST /api/generate
-Description: Generate a single novel mathematical conjecture.
-Request Body:
-JSON
-{
-  "domain": "Number Theory",
-  "type": "Existence",
-  "complexity": "Graduate",
-  "temperature": 0.7,
-  "maxTokens": 1200,
-  "context": "Focus on prime gaps and Cramér's model",
-  "model": "llama-3.3-70b-versatile",
-  "systemPrompt": "You are a world-class mathematician..."
-}
-Field Constraints:
-Table
-Field	Type	Constraints	Default
-domain	string	Enum: 8 domains	"Number Theory"
-type	string	Enum: 7 types	"Existence"
-complexity	string	Enum: 4 levels	"Graduate"
-temperature	float	0.1 – 1.5	0.7
-maxTokens	integer	800, 1200, 2000, 3000	1200
-context	string	Max 500 chars	""
-model	string	Enum: 6 models	"llama-3.3-70b-versatile"
-systemPrompt	string	Max 4000 chars	(default)
-Response:
-JSON
-{
-  "content": "**CONJECTURE TITLE**: ...\n**STATEMENT**: ...",
-  "usage": {
-    "prompt_tokens": 342,
-    "completion_tokens": 876,
-    "total_tokens": 1218
-  },
-  "model": "llama-3.3-70b-versatile",
-  "finish_reason": "stop"
-}
-Error Response:
-JSON
-{
-  "error": "Rate limit exceeded. Try again in 42s.",
-  "code": "RATE_LIMITED",
-  "status": 429
-}
-POST /api/batch
-Description: Generate multiple conjectures in a single request with parallel processing.
-Request Body:
-JSON
-{
-  "domain": "Mixed",
-  "count": 3,
-  "complexity": "Graduate",
-  "temperature": 0.7,
-  "maxTokens": 1000,
-  "context": "spectral theory",
-  "model": "llama-3.3-70b-versatile",
-  "systemPrompt": "..."
-}
-Response:
-JSON
-{
-  "results": [
-    {
-      "ok": true,
-      "domain": "Number Theory",
-      "type": "Inequality",
-      "content": "**CONJECTURE TITLE**: ..."
-    },
-    {
-      "ok": false,
-      "error": "Context length exceeded"
-    }
-  ],
-  "succeeded": 2,
-  "failed": 1,
-  "total": 3
-}
-Resilience Pattern: Each item in the batch is processed independently. A single failure does not cascade.
-⚡ Performance Engineering
-Frontend Performance Budget
-Table
-Metric	Budget	Actual	Status
-First Contentful Paint	< 1.5s	~0.8s	✅
-Largest Contentful Paint	< 2.5s	~1.2s	✅
-Time to Interactive	< 3.5s	~1.8s	✅
-Cumulative Layout Shift	< 0.1	~0.02	✅
-Total Blocking Time	< 200ms	~50ms	✅
-Optimizations Applied
-Preconnect Hints: preconnect to fonts.googleapis.com and fonts.gstatic.com
-Lazy MathJax: async script loading with skipHtmlTags optimization
-CSS Containment: will-change: transform on animated elements
-Passive Listeners: Scroll events use { passive: true }
-Debounced Resize: Canvas resize handler throttled via requestAnimationFrame
-LocalStorage Batching: History writes coalesced (single JSON stringify)
-CDN Parallelism: All external resources loaded from independent CDNs
-Backend Performance
-Connection Pooling: Reuse HTTP/2 connections to Groq API
-Streaming Ready: Architecture supports SSE streaming (implementation pending)
-Timeout Handling: 30s request timeout with graceful degradation
-Payload Validation: Joi/Zod schema validation (recommended addition)
-🔐 Security & Privacy
-Threat Model & Mitigations
-Table
-Threat	Severity	Mitigation
-API Key Leakage	Critical	Server-side env vars only; client never sees GROQ_API_KEY
-XSS via Conjecture Output	High	san() function strips <script> and on*= event handlers
-Prompt Injection	High	User context escaped; system prompt isolated
-Rate Limit Abuse	Medium	Implement Redis-backed rate limiter per IP
-LocalStorage Tampering	Low	History data validated on import; schema checked
-CSRF	Low	Stateless API; no cookies/session (if auth added, use CSRF tokens)
-Content Security Policy (Recommended)
-http
-Content-Security-Policy:
-  default-src 'self';
-  script-src 'self' 'unsafe-inline'
-    https://cdn.jsdelivr.net
-    https://cdnjs.cloudflare.com;
-  style-src 'self' 'unsafe-inline'
-    https://cdn.jsdelivr.net
-    https://fonts.googleapis.com;
-  font-src https://fonts.gstatic.com;
-  connect-src 'self' https://api.groq.com;
-  img-src 'self' data:;
-  frame-ancestors 'none';
-  base-uri 'self';
-  form-action 'self';
-🚀 Getting Started
-Prerequisites
-Table
-Dependency	Version	Purpose
-Node.js	>= 18.0.0	Runtime
-npm	>= 9.0.0	Package manager
-Git	>= 2.40	Version control
-Quick Start (Development)
-bash
-# 1. Clone repository
-git clone https://github.com/yourusername/neural-conjecture-proposer.git
-cd neural-conjecture-proposer
+## 🗺 Codebase Anatomy (line-accurate)
 
-# 2. Install server dependencies
-npm install
+Every section below is a real comment banner in the source, with its real starting line — the actual table of contents of the file, useful for code review or onboarding.
 
-# 3. Configure environment
-cp .env.example .env
-# Edit .env and add your GROQ_API_KEY
+<details>
+<summary><strong>CSS — 21 sections, lines 34–2106</strong></summary>
 
-# 4. Start development server
-npm run dev
+| § | Section | Starts at |
+|---|---|---|
+| 1 | CSS Custom Properties — Design Tokens | `L36` |
+| 2 | Reset & Base | `L112` |
+| 3 | Navbar — Mobile-First, Bootstrap Integrated | `L155` |
+| 4 | Hero Section — Mathematical Observatory | `L383` |
+| 5 | Ticker | `L826` |
+| 6 | App Framework — Tabs, Sections | `L855` |
+| 7 | Cards & Containers | `L905` |
+| 8 | Form Controls | `L954` |
+| 9 | Domain Grid & Chips | `L1067` |
+| 10 | Generate Output | `L1145` |
+| 11 | Batch Tab | `L1420` |
+| 12 | Analytics | `L1488` |
+| 13 | History | `L1516` |
+| 14 | Learn Tab | `L1553` |
+| 15 | Settings | `L1560` |
+| 16 | Modal | `L1641` |
+| 17 | Toast | `L1704` |
+| 18 | Footer | `L1743` |
+| 19 | Utilities & Animations | `L1783` |
+| 20 | Responsive — Mobile First | `L1811` |
+| 21 | Print | `L1997` |
 
-# 5. Open browser
-open http://localhost:3000
-Environment Variables
-bash
-# Required
-GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</details>
 
-# Optional
-PORT=3000                           # Server port
-NODE_ENV=development                # environment
-RATE_LIMIT_WINDOW_MS=60000          # Rate limit window
-RATE_LIMIT_MAX_REQUESTS=10          # Max requests per window
-CORS_ORIGIN=*                       # CORS origin whitelist
-LOG_LEVEL=info                      # debug | info | warn | error
-⚙️ Configuration Reference
-Frontend Settings (LocalStorage)
-Table
-Key	Type	Default	Description
-ncp_s	JSON	{}	Settings: model, system prompt, defaults
-ncp_h	JSON	[]	History: all generated conjectures
-Model Registry
-Table
-Model ID	Provider	Context	Best For
-llama-3.3-70b-versatile	Meta	128K	Default — Best quality/reasoning
-llama-3.1-8b-instant	Meta	128K	Speed — prototyping & testing
-mixtral-8x7b-32768	Mistral	32K	Long output — detailed proofs
-gemma2-9b-it	Google	8K	Efficiency — low latency
-qwen/qwen3-32b	Alibaba	128K	Multilingual — non-English math
-openai/gpt-oss-120b	OpenAI	256K	Deep reasoning — complex conjectures
-Complexity Levels
-Table
-Level	Description	Target Audience
-Undergraduate	Accessible with basic analysis/algebra	Students
-Graduate	Requires advanced coursework	MSc/PhD students
-Research-level	Novel, potentially publishable	Researchers
-Millennium-level	Comparable to Clay problems	Fields Medalists
-🚢 Deployment Guide
-Option A: Vercel (Recommended for Frontend)
-bash
-# Install Vercel CLI
-npm i -g vercel
+<details>
+<summary><strong>JavaScript — 25 sections, lines 2655–3535</strong></summary>
 
-# Deploy
-vercel --prod
-Configuration (vercel.json):
-JSON
-{
-  "version": 2,
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "env": {
-    "GROQ_API_KEY": "@groq-api-key"
-  }
-}
-Option B: Docker (Full Stack)
-dockerfile
-# Dockerfile
-FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3000
-CMD ["node", "server.js"]
-bash
-# Build & run
-docker build -t neural-conjecture .
-docker run -p 3000:3000 -e GROQ_API_KEY=$GROQ_API_KEY neural-conjecture
-Option C: AWS / GCP / Azure
-See infrastructure/ directory for Terraform configurations:
-ECS/Fargate (AWS) with ALB and auto-scaling
-Cloud Run (GCP) with concurrency=80
-Container Apps (Azure) with Dapr sidecar
-📊 Observability & Monitoring
-Recommended Stack
-Table
-Layer	Tool	Purpose
-Logs	Winston / Pino	Structured JSON logging
-Metrics	Prometheus + Grafana	Request latency, error rates, token usage
-Tracing	Jaeger / Zipkin	Distributed trace across Groq API calls
-Uptime	UptimeRobot / Pingdom	External health checks
-RUM	Vercel Analytics / Datadog	Real user monitoring
-Key Metrics to Track
-plain
-api_request_duration_seconds{endpoint="/api/generate"}   # p50, p95, p99
-api_requests_total{status="200", endpoint="/api/generate"} # RPS
-groq_tokens_total{model="llama-3.3-70b-versatile"}        # Cost estimation
-client_errors_total{type="parse_error"}                   # Frontend error tracking
-history_size_bytes{percentile="p99"}                     # LocalStorage pressure
-🧪 Testing Strategy
-Frontend Tests (Playwright)
-TypeScript
-// e2e/generate.spec.ts
-import { test, expect } from '@playwright/test';
+| § | Section | Starts at | Key functions |
+|---|---|---|---|
+| 1 | Constants | `L2655` | `DEFAULT_MODEL`, `VALID_MODELS` |
+| 2 | State | `L2669` | `S` |
+| 3 | Helpers | `L2702` | `getMaxTok`, `esc`, `san`, `diffCls`, `fmtDate` |
+| 4 | Settings | `L2736` | `loadSettings`, `saveSettings`, `selModel` |
+| 5 | History Persistence | `L2812` | `saveHist`, `loadHist` |
+| 6 | Backend API | `L2821` | `callBackend` |
+| 7 | Prompt Builders | `L2852` | `buildSys`, `buildUser` |
+| 8 | Parse Response | `L2874` | `parseResp` |
+| 9 | Render Conjecture | `L2893` | `renderConj` |
+| 10 | Generate (Single) | `L2924` | `generateConjecture` |
+| 11 | Batch Generation | `L2998` | `runBatch` |
+| 12 | Modal | `L3093` | `showMod`, `closeMod` |
+| 13 | History — CRUD | `L3107` | `renderHist`, `filterHist`, `exportHist`, `importHist` |
+| 14 | Conjecture Actions | `L3208` | `likeConj`, `copyConj`, `shareConj` |
+| 15 | Analytics | `L3256` | `renderAnalytics` |
+| 16 | Selectors | `L3337` | `selDomain`, `selType` |
+| 17 | Tab Navigation | `L3351` | `switchTab` |
+| 18 | Status / Toast | `L3365` | `setStat`, `toast` |
+| 19 | Scroll / Hero | `L3383` | `scrollToHero`, `updHeroTotal` |
+| 20 | Canvas Particles | `L3395` | `initCanvas`, `draw` |
+| 21 | Ticker | `L3432` | `initTicker` |
+| 22 | Learn | `L3455` | `initLearn`, `togLearn` |
+| 23 | LaTeX Reference | `L3497` | `initLatex` |
+| 24 | Keyboard Shortcuts | `L3524` | — |
+| 25 | Init | `L3535` | `DOMContentLoaded` bootstrap |
 
-test('generates a conjecture and renders MathJax', async ({ page }) => {
-  await page.goto('/');
-  await page.click('text=Generate Conjecture');
-  await expect(page.locator('.cout')).toBeVisible({ timeout: 15000 });
-  await expect(page.locator('.ctlx')).not.toBeEmpty();
-  // Verify MathJax rendered
-  await expect(page.locator('.mjx-chtml')).toHaveCount({ min: 1 });
-});
-Backend Tests (Jest + Supertest)
-JavaScript
-// __tests__/api.test.js
-const request = require('supertest');
-const app = require('../server');
+</details>
 
-describe('POST /api/generate', () => {
-  it('returns structured conjecture with valid payload', async () => {
-    const res = await request(app)
-      .post('/api/generate')
-      .send({ domain: 'Number Theory', type: 'Existence', complexity: 'Graduate' });
+---
 
-    expect(res.status).toBe(200);
-    expect(res.body.content).toMatch(/\*\*CONJECTURE TITLE\*\*/);
-    expect(res.body.content).toMatch(/\*\*STATEMENT\*\*/);
-  });
+## 🔁 Generation Request Lifecycle
 
-  it('rejects invalid complexity levels', async () => {
-    const res = await request(app)
-      .post('/api/generate')
-      .send({ complexity: 'Impossible' });
+<img src="assets/divider.svg" width="100%" height="14" alt=""/>
 
-    expect(res.status).toBe(400);
-  });
-});
-Load Testing (k6)
-JavaScript
-// loadtest.js
-import http from 'k6/http';
-import { check } from 'k6';
-
-export const options = {
-  stages: [
-    { duration: '30s', target: 10 },
-    { duration: '1m', target: 50 },
-    { duration: '30s', target: 0 },
-  ],
-};
-
-export default () => {
-  const res = http.post('https://your-api.com/api/generate', JSON.stringify({
-    domain: 'Number Theory',
-    type: 'Existence',
-  }), { headers: { 'Content-Type': 'application/json' }});
-
-  check(res, {
-    'status is 200': (r) => r.status === 200,
-    'response time < 2s': (r) => r.timings.duration < 2000,
-  });
-};
-🤝 Contributing
-We welcome contributions from the mathematical and engineering communities. Please follow these guidelines:
-Commit Convention (Conventional Commits)
-plain
-feat(api): add streaming support for /api/generate
-fix(ui): resolve MathJax race condition on rapid tab switching
-docs(readme): add deployment guide for GCP Cloud Run
-perf(canvas): optimize particle collision detection with spatial hashing
-refactor(state): migrate from localStorage to IndexedDB for >5MB history
-security(xss): strengthen san() against data URI vectors
-test(e2e): add batch generation failure scenario
-Pull Request Template
-[ ] Tests: Added/updated unit and E2E tests
-[ ] Documentation: Updated README and API docs
-[ ] Performance: Verified no regression in Lighthouse scores
-[ ] Accessibility: Verified keyboard navigation and ARIA labels
-[ ] Security: Sanitized all user inputs; no new CSP violations
-Development Workflow
-bash
-# 1. Fork and branch
-git checkout -b feat/your-feature-name
-
-# 2. Make changes with tests
-npm test
-
-# 3. Lint and format
-npm run lint
-npm run format
-
-# 4. Commit with convention
-npx cz  # or git commit -m "feat: ..."
-
-# 5. Push and PR
-git push origin feat/your-feature-name
-🗺️ Roadmap
-Q3 2026
-[ ] Streaming: Server-Sent Events for real-time token generation
-[ ] Auth: OAuth 2.0 / GitHub login with cloud-synced history
-[ ] LaTeX Export: PDF generation via pandoc.js for conjectures
-[ ] Collaboration: Shareable conjecture URLs with permanent IDs
-Q4 2026
-[ ] Verification Layer: Integrate Lean 4 / Coq proof assistant for auto-checking
-[ ] Citation Engine: Auto-link to arXiv, MathSciNet, zbMATH
-[ ] Mobile App: React Native wrapper with offline queue
-[ ] Multi-Agent: Debate mode — two models argue for/against a conjecture
-2027
-[ ] Theorem Prover: ATP integration (E Prover, Vampire) for automated proof attempts
-[ ] Knowledge Graph: Neo4j backend for conjecture-relationship mapping
-[ ] Peer Review: Community voting and expert verification badges
-📜 License & Attribution
-License
-plain
-MIT License
-
-Copyright (c) 2026 Neural Conjecture Proposer Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-Attribution
-Groq: Ultra-low-latency inference API (groq.com)
-Meta AI: LLaMA 3 model family (ai.meta.com)
-Mistral AI: Mixtral 8x7B MoE (mistral.ai)
-Google DeepMind: Gemma 2 (ai.google.dev)
-MathJax Consortium: LaTeX rendering (mathjax.org)
-GreenSock: GSAP animation platform (greensock.com)
-Citation
-If you use this tool in academic research, please cite:
-bibtex
-@software{neural_conjecture_proposer_2026,
-  title = {Neural Conjecture Proposer: AI-Powered Mathematical Discovery},
-  author = {Your Name},
-  year = {2026},
-  url = {https://github.com/yourusername/neural-conjecture-proposer},
-  note = {Version 2.0.0}
-}
 <div align="center">
-<!-- Footer Banner -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,100:d4af37&height=120&section=footer&text=Explore%20the%20Infinite&fontSize=24&fontColor=e8c040&animation=fadeIn"/>
-<p align="center">
-  <sub>Built with 💛, π, and ∞ by the open mathematical community.</sub>
-</p>
-<p align="center">
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/issues/new?template=bug_report.md">🐛 Report Bug</a>
-  ·
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/issues/new?template=feature_request.md">✨ Request Feature</a>
-  ·
-  <a href="https://github.com/yourusername/neural-conjecture-proposer/discussions">💬 Discussions</a>
-</p>
+<img src="assets/flow.svg" alt="Animated request lifecycle diagram" width="100%" loading="lazy" decoding="async"/>
+</div>
+
+The animation above is intentionally honest about what it is: a looping, stylized illustration of the pipeline, not a literal single-request timeline. For the precise, literal version — exact call order, payload shapes, what happens on failure — here's the same path as a sequence diagram:
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant UI as UI (genBtn click)
+    participant S as State Object S
+    participant API as callBackend()
+    participant BE as Backend Proxy
+    participant Groq as Groq LPU
+    participant P as parseResp()
+    participant DOM as renderConj() + MathJax
+    participant LS as localStorage
+
+    User->>UI: Configure domain/type/complexity/temp, click Generate
+    UI->>S: Read domain, type, cx, temp, model, systemPrompt
+    UI->>UI: Lock button, show loading state
+    UI->>API: POST payload {domain, type, complexity, temperature, maxTokens, context, model, systemPrompt}
+    API->>BE: fetch('/api/generate')
+    BE->>Groq: Chat completion (Bearer GROQ_API_KEY, server-side)
+    Groq-->>BE: Free-form markdown completion
+    BE-->>API: { content: "...markdown..." }
+    API->>P: parseResp(raw)
+    P->>P: Regex-extract 7 fields (TITLE, STATEMENT, MOTIVATION, RELATED, APPROACHES, DIFFICULTY, KEYWORDS)
+    P-->>DOM: parsed object
+    DOM->>DOM: san()-sanitize, inject HTML, MathJax.typesetPromise()
+    DOM->>LS: S.hist.unshift(entry) → saveHist()
+    DOM->>User: Render conjecture card + toast "Generated & saved!"
+```
+
+The same `parseResp` → `san()` → MathJax pipeline is reused, unmodified, by `runBatch()` for up to 5 concurrent conjecture cards — single-generation and batch-generation share 100% of their rendering/parsing logic and diverge only in which endpoint is called (`/api/generate` vs `/api/batch`).
+
+---
+
+## 🔌 Backend API Contract
+
+The frontend is backend-agnostic — implement these three endpoints in any stack and the UI works unmodified.
+
+### `GET /api/health`
+```json
+{ "keyConfigured": true }
+```
+
+### `POST /api/generate`
+```jsonc
+// → Request
+{
+  "domain": "Number Theory", "type": "Existence", "complexity": "Graduate",
+  "temperature": 0.7, "maxTokens": 1200, "context": "",
+  "model": "llama-3.3-70b-versatile", "systemPrompt": "You are a world-class mathematician…"
+}
+// ← Response (content is parsed client-side by parseResp())
+{ "content": "**CONJECTURE TITLE**: …\n**STATEMENT**: …\n**MOTIVATION**: …" }
+```
+
+### `POST /api/batch`
+```jsonc
+// → Request: { domain, count, complexity, temperature, maxTokens, context, model, systemPrompt }
+// ← Response
+{ "results": [
+  { "ok": true,  "domain": "Topology", "type": "Structural", "content": "**CONJECTURE TITLE**: …" },
+  { "ok": false, "error": "rate limited" }
+]}
+```
+
+<details>
+<summary><strong>Minimal reference implementation (Node/Express)</strong></summary>
+
+```js
+app.post('/api/generate', async (req, res) => {
+  const { systemPrompt, domain, type, complexity, context, model, temperature, maxTokens } = req.body;
+  const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model, temperature, max_tokens: maxTokens,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: `Generate a novel ${type.toLowerCase()} conjecture in ${domain}. Difficulty: ${complexity}-level. ${context}` }
+      ]
+    })
+  });
+  const data = await r.json();
+  res.json({ content: data.choices[0].message.content });
+});
+```
+
+</details>
+
+---
+
+## 🔬 Engineering Review — Honest Trade-Offs
+
+A real review calls out cost as well as benefit. Both are here.
+
+### Strong patterns
+
+| Pattern | Where | Why it matters |
+|---|---|---|
+| **Regex header-parsing instead of JSON mode** | `parseResp()` — one regex: `` /\*\*${k}\*\*:?\s*([\s\S]*?)(?=\*\*[A-Z]\|$)/i `` | Degrades gracefully — a missing section renders empty instead of throwing, which matters because LLM output format compliance is never 100%. |
+| **Two-tier output sanitization** | `esc()` for plain text, `san()` for AI-sourced HTML (strips `<script>` + inline `on*` handlers) | The threat model is explicit: LLM output is a lower-trust input, even though it's "your own" AI — `san()` exists specifically for that boundary. |
+| **Chart lifecycle hygiene** | `renderAnalytics()` calls `.destroy()` on all three Chart.js instances before recreating them | Prevents the canonical Chart.js memory leak from re-instantiating on a canvas that already has a chart bound to it. |
+| **Self-healing settings** | `loadSettings()` validates the persisted model ID against `VALID_MODELS` on every load | If Groq deprecates a model string, a stale `localStorage` entry can't permanently brick generation — it silently falls back to `DEFAULT_MODEL`. |
+| **Progressive enhancement on share** | `shareConj()` tries `navigator.share()`, falls back to `navigator.clipboard.writeText()` | One code path correctly covers mobile share-sheet and desktop clipboard without feature-detection branching at the call site. |
+| **Passive scroll listener** | `window.addEventListener('scroll', ..., { passive: true })` | Tells the browser this handler will never call `preventDefault()`, avoiding scroll-jank from a blocked compositor thread. |
+
+### Known costs / things to flag in a real review
+
+| Observation | Detail | Why it's worth knowing |
+|---|---|---|
+| **O(n²) particle connection check** | `initCanvas()`'s `draw()` loop compares all pairs of 55 particles every frame (1,485 distance checks/frame, uncapped at `requestAnimationFrame` rate) | Fine at n=55, but the algorithm doesn't scale — a future "denser background" request would need a spatial grid/quadtree, not a bigger `n`. |
+| **Resize listener is not debounced** | `window.addEventListener('resize', ...)` directly re-reads `innerWidth/innerHeight` on every event | Harmless here since the handler is cheap, but it's the kind of unthrottled listener that becomes a real cost if more work gets added to it later. |
+| **54 inline `onclick` attributes** | Throughout the markup, e.g. `onclick="selDomain(this)"` | A deliberate trade-off for a zero-build single file (no need to wire up listeners after dynamic re-render), but it does mean all handler functions must stay on `window` scope — this would need to change before any move to modules/bundling. |
+| **History has no schema version field** | `S.hist` entries are plain objects persisted directly to `localStorage` | Works today, but adding a new field to history entries later has no migration path for existing users' saved data. |
+| **No automated tests** | The entire 51-function surface, including the parsing regex that everything else depends on, has zero test coverage in this file | `parseResp()` is the single highest-leverage function to break silently (e.g. if a model changes its markdown formatting) — it's also the easiest to unit test in isolation. |
+
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/<your-username>/mathematical-conjecture-proposer.git
+cd mathematical-conjecture-proposer
+
+# Stand up any backend implementing the 3-endpoint contract above,
+# with GROQ_API_KEY set in its environment — see reference snippet above.
+
+npx serve .          # zero-build static serve, or open index.html directly
+```
+
+Then: **Settings → Test Backend** to confirm `keyConfigured: true`, pick a model card, hit **Generate Conjecture**.
+
+---
+
+## ✦ Full Feature List
+
+- **Multi-model switcher** — `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `openai/gpt-oss-120b`, `openai/gpt-oss-20b`, `meta-llama/llama-4-scout-17b-16e-instruct`, `qwen/qwen3-32b`
+- **8 domains × 7 types × 4 complexity tiers** parametric generation grid, plus continuous 0.1–1.5 temperature control
+- **Editable system prompt** with `{domain}` `{type}` `{complexity}` `{context}` interpolation
+- **Batch mode** — 2–5 conjectures per run, live progress bar, per-item failure isolation, "Mixed" domain option
+- **MathJax 3** rendering of every statement, lazily re-typeset on tab switch / accordion expand
+- **History** — search, per-domain filter chips, like/save, JSON export & re-import, native share + clipboard fallback
+- **Analytics** — doughnut (domain distribution), bar (complexity breakdown), line chart (real 7-day rolling activity computed from history timestamps)
+- **Learn hub** — accordion covering Riemann Hypothesis, Goldbach, Twin Primes, P vs NP, Poincaré, Birch & Swinnerton-Dyer, plus a 12-symbol click-to-copy LaTeX cheat sheet
+- **Ambient canvas** — 55 animated mathematical glyphs with proximity-based connective lines; infinite marquee ticker of 12 famous theorems/identities
+- **GSAP + ScrollTrigger** — hero entrance timeline, scroll-scrubbed parallax, staggered section reveals
+- **Accessibility** — `aria-hidden` on every decorative layer, `aria-label`/`role="button"` on custom interactive elements, dedicated print stylesheet
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Markup / Styling | Semantic HTML5, Bootstrap 5.3, custom CSS design-token system, CSS `@property` for typed animatable values |
+| Typography | Cormorant Garamond (display), DM Sans / Inter (UI), JetBrains Mono (code/math) |
+| Math | MathJax 3 (TeX → CHTML) |
+| Charts | Chart.js 4 |
+| Motion | GSAP 3 + ScrollTrigger, CSS keyframes, Canvas 2D |
+| State / Persistence | Vanilla JS, `localStorage` |
+| Inference | Groq LPU (LLaMA 3.x/4, GPT-OSS, Qwen3) |
+| Backend | Bring your own — 3-endpoint contract above |
+| README visuals | Hand-authored animated SVG (`assets/banner.svg`, `assets/flow.svg`) — CSS keyframes + `offset-path`, no GIFs |
+
+---
+
+## 🗺 Roadmap
+
+- [ ] Unit tests for `parseResp()` against real model output samples (highest-leverage function, zero current coverage)
+- [ ] Reference backend (Express + serverless variants) committed to `/server`
+- [ ] Spatial partitioning for the particle field if density increases beyond current O(n²) budget
+- [ ] Streaming token rendering (SSE) for generation
+- [ ] History schema versioning for safe future migrations
+- [ ] Formal verification sketch hooks (Lean/Coq) per conjecture
+
+## 🤝 Contributing
+
+Issues and PRs welcome. For anything beyond a trivial fix, please open an issue describing the change first.
+
+## 📄 License
+
+MIT — see [`LICENSE`](LICENSE).
+
+---
+
+<div align="center">
+<sub>All conjectures are AI-generated starting points for exploration, not verified mathematics — every output requires expert review before any claim of correctness.</sub>
 </div>
