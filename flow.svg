@@ -1,0 +1,86 @@
+<svg viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Request lifecycle animation">
+<defs>
+  <filter id="glow2" x="-100%" y="-100%" width="300%" height="300%">
+    <feGaussianBlur stdDeviation="3.2" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="nodeBlur" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="6"/>
+  </filter>
+</defs>
+
+<style>
+  @keyframes travel  { to { offset-distance: 100%; } }
+  @keyframes nodeGlow{ 0% { opacity: 0; } 4% { opacity: .85; } 10% { opacity: 0; } 100% { opacity: 0; } }
+  @keyframes dash     { to { stroke-dashoffset: -24; } }
+
+  .pulse-main  { offset-path: path('M125,150 L1075,150'); animation: travel 6s linear infinite; }
+  .pulse-trail1{ offset-path: path('M125,150 L1075,150'); animation: travel 6s linear infinite; animation-delay: .12s; }
+  .pulse-trail2{ offset-path: path('M125,150 L1075,150'); animation: travel 6s linear infinite; animation-delay: .24s; }
+  .line        { animation: dash 1.2s linear infinite; }
+  .g0 { animation: nodeGlow 6s linear infinite; animation-delay: 0s;   }
+  .g1 { animation: nodeGlow 6s linear infinite; animation-delay: 1.2s; }
+  .g2 { animation: nodeGlow 6s linear infinite; animation-delay: 2.4s; }
+  .g3 { animation: nodeGlow 6s linear infinite; animation-delay: 3.6s; }
+  .g4 { animation: nodeGlow 6s linear infinite; animation-delay: 4.8s; }
+  .g5 { animation: nodeGlow 6s linear infinite; animation-delay: 6.0s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse-main, .pulse-trail1, .pulse-trail2, .line,
+    .g0, .g1, .g2, .g3, .g4, .g5 {
+      animation: none !important;
+    }
+    .pulse-trail1, .pulse-trail2 { display: none; }
+    .pulse-main { offset-distance: 38%; }
+  }
+</style>
+
+<rect width="1200" height="260" fill="#04040a"/>
+<text x="40" y="34" font-family="Menlo, Consolas, monospace" font-size="13" letter-spacing="2" fill="#52526e">REQUEST LIFECYCLE &#8212; generateConjecture()</text>
+
+<line class="line" x1="125" y1="150" x2="1075" y2="150" stroke="#33334a" stroke-width="2" stroke-dasharray="6 6"/>
+
+<!-- Node 0: USER -->
+<rect class="g0" x="40" y="118" width="170" height="64" rx="12" fill="#00d4f5" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="40" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#00d4f5" stroke-opacity="0.55" stroke-width="1.4"/>
+<text x="125" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">USER</text>
+<text x="125" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#a8a8c4">sets params, clicks Generate</text>
+
+<!-- Node 1: CLIENT UI -->
+<rect class="g1" x="230" y="118" width="170" height="64" rx="12" fill="#00d4f5" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="230" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#00d4f5" stroke-opacity="0.55" stroke-width="1.4"/>
+<text x="315" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">CLIENT UI</text>
+<text x="315" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#a8a8c4">index.html &#183; callBackend()</text>
+
+<!-- Node 2: BACKEND PROXY -->
+<rect class="g2" x="420" y="118" width="170" height="64" rx="12" fill="#7c3aed" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="420" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#9d5cf6" stroke-opacity="0.6" stroke-width="1.4"/>
+<text x="505" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">BACKEND PROXY</text>
+<text x="505" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#c4b5fd">holds GROQ_API_KEY</text>
+
+<!-- Node 3: GROQ LPU -->
+<rect class="g3" x="610" y="118" width="170" height="64" rx="12" fill="#c9a227" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="610" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#e8c040" stroke-opacity="0.65" stroke-width="1.4"/>
+<text x="695" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">GROQ LPU</text>
+<text x="695" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#e8c040">LLaMA &#183; GPT-OSS &#183; Qwen3</text>
+
+<!-- Node 4: PARSE -->
+<rect class="g4" x="800" y="118" width="170" height="64" rx="12" fill="#00d4f5" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="800" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#00d4f5" stroke-opacity="0.55" stroke-width="1.4"/>
+<text x="885" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">PARSE &#183; SANITIZE</text>
+<text x="885" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#a8a8c4">parseResp() &#183; san()</text>
+
+<!-- Node 5: RENDER + SAVE -->
+<rect class="g5" x="990" y="118" width="170" height="64" rx="12" fill="#00d4f5" filter="url(#nodeBlur)" opacity="0"/>
+<rect x="990" y="118" width="170" height="64" rx="12" fill="#0a0a14" stroke="#00d4f5" stroke-opacity="0.55" stroke-width="1.4"/>
+<text x="1075" y="145" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#eeeef7">RENDER &#183; SAVE</text>
+<text x="1075" y="162" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#a8a8c4">MathJax &#183; localStorage</text>
+
+<!-- traveling request pulse -->
+<circle class="pulse-trail2" r="4" fill="#e8c040" opacity="0.25"/>
+<circle class="pulse-trail1" r="5" fill="#e8c040" opacity="0.5"/>
+<circle class="pulse-main"   r="6" fill="#e8c040" filter="url(#glow2)"/>
+
+<text x="40" y="225" font-family="Menlo, Consolas, monospace" font-size="11" fill="#33334a">cyan = client trust boundary &#160;&#183;&#160; purple = your backend &#160;&#183;&#160; gold = third-party inference</text>
+<text x="40" y="244" font-family="Menlo, Consolas, monospace" font-size="10.5" fill="#33334a">loops continuously to illustrate the pipeline &#8212; see the Mermaid sequence diagram below for literal request/response order</text>
+</svg>

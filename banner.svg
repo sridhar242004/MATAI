@@ -1,0 +1,101 @@
+<svg viewBox="0 0 1200 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mathematical Conjecture Proposer">
+<defs>
+  <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#e8c040"/>
+    <stop offset="55%" stop-color="#c9a227"/>
+    <stop offset="100%" stop-color="#8a6e18"/>
+  </linearGradient>
+  <radialGradient id="vignette" cx="78%" cy="45%" r="65%">
+    <stop offset="0%" stop-color="#c9a227" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#04040a" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="2.6" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+    <path d="M0 42 L42 42 L42 0" fill="none" stroke="#c9a227" stroke-opacity="0.05" stroke-width="1"/>
+  </pattern>
+</defs>
+
+<style>
+  @keyframes spin    { to { transform: rotate(360deg); } }
+  @keyframes spinRev { to { transform: rotate(-360deg); } }
+  @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+  @keyframes riseIn  { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes sweep   { 0% { transform: translateY(-4px); opacity: 0; } 12% { opacity: .55; } 88% { opacity: .55; } 100% { transform: translateY(284px); opacity: 0; } }
+  @keyframes pulseDot{ 0%,100% { opacity: .55; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.3); } }
+  @keyframes blink   { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes twinkle { 0%, 100% { opacity: .12; } 50% { opacity: .65; } }
+
+  .ring-outer { transform-origin: 900px 140px; animation: spin 42s linear infinite; }
+  .ring-inner { transform-origin: 900px 140px; animation: spinRev 23s linear infinite; }
+  .core       { transform-origin: 900px 140px; animation: breathe 3.4s ease-in-out infinite; }
+  .scanline   { animation: sweep 7s linear infinite; }
+  .status-dot { transform-origin: center; animation: pulseDot 1.7s ease-in-out infinite; }
+  .cursor     { animation: blink 1s steps(1) infinite; }
+  .t-label, .t-line1, .t-line2, .t-tag, .badge { opacity: 0; animation: riseIn .8s ease-out forwards; }
+  .t-label { animation-delay: .05s; }
+  .t-line1 { animation-delay: .18s; }
+  .t-line2 { animation-delay: .32s; }
+  .t-tag   { animation-delay: .5s;  }
+  .badge   { animation-delay: .65s; }
+  .spk     { animation: twinkle 4s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring-outer, .ring-inner, .core, .scanline, .status-dot, .cursor, .spk {
+      animation: none !important;
+    }
+    .t-label, .t-line1, .t-line2, .t-tag, .badge {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<rect width="1200" height="280" fill="#04040a"/>
+<rect width="1200" height="280" fill="url(#grid)"/>
+<rect width="1200" height="280" fill="url(#vignette)"/>
+
+<circle class="spk" cx="120" cy="40"  r="2"   fill="#00d4f5" style="animation-delay:.2s"/>
+<circle class="spk" cx="240" cy="230" r="1.6" fill="#c9a227" style="animation-delay:1.1s"/>
+<circle class="spk" cx="560" cy="35"  r="1.8" fill="#7c3aed" style="animation-delay:2s"/>
+<circle class="spk" cx="40"  cy="160" r="1.4" fill="#c9a227" style="animation-delay:.6s"/>
+<circle class="spk" cx="650" cy="250" r="2"   fill="#00d4f5" style="animation-delay:1.6s"/>
+
+<rect class="scanline" x="0" y="0" width="1200" height="2" fill="#c9a227" opacity="0"/>
+
+<g>
+  <circle cx="900" cy="140" r="130" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+  <g class="ring-outer">
+    <circle cx="900" cy="140" r="100" fill="none" stroke="#c9a227" stroke-opacity="0.28"/>
+    <text x="1000"   y="140"   text-anchor="middle" dominant-baseline="middle" font-size="24" fill="#e8c040" filter="url(#glow)">&#8721;</text>
+    <text x="930.9"  y="235.1" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#00d4f5">&#8747;</text>
+    <text x="819.1"  y="198.8" text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#e8c040">&#8706;</text>
+    <text x="819.1"  y="81.2"  text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#00d4f5">&#8734;</text>
+    <text x="930.9"  y="44.9"  text-anchor="middle" dominant-baseline="middle" font-size="22" fill="#e8c040">&#960;</text>
+  </g>
+  <g class="ring-inner">
+    <circle cx="900" cy="140" r="60" fill="none" stroke="#00d4f5" stroke-opacity="0.22"/>
+    <circle cx="960" cy="140" r="4" fill="#00d4f5"/>
+    <circle cx="870" cy="192" r="4" fill="#c9a227"/>
+    <circle cx="870" cy="88"  r="4" fill="#c9a227"/>
+  </g>
+  <g class="core">
+    <text x="900" y="140" text-anchor="middle" dominant-baseline="middle" font-size="40" fill="url(#goldGrad)" filter="url(#glow)" font-family="Georgia, serif">&#8721;</text>
+  </g>
+</g>
+
+<text class="t-label" x="64" y="72"  font-family="Menlo, Consolas, monospace" font-size="13" letter-spacing="3" fill="#8a6e18">AI-POWERED MATHEMATICAL DISCOVERY</text>
+<text class="t-line1" x="62" y="124" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="600" fill="url(#goldGrad)">Mathematical Conjecture</text>
+<text class="t-line2" x="62" y="176" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="600" font-style="italic" fill="#00d4f5">Proposer</text>
+<text class="t-tag"   x="64" y="216" font-family="Menlo, Consolas, monospace" font-size="14" fill="#a8a8c4">Groq LPU inference &#183; 8 domains &#183; 7 statement types &#183; zero build step<tspan class="cursor">&#9612;</tspan></text>
+
+<g class="badge">
+  <circle class="status-dot" cx="72" cy="248" r="4.5" fill="#34d399"/>
+  <text x="86" y="252" font-family="Menlo, Consolas, monospace" font-size="12.5" fill="#52526e">model: llama-3.3-70b-versatile &#183; status: online</text>
+</g>
+
+<rect x="1" y="1" width="1198" height="278" rx="18" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+</svg>
